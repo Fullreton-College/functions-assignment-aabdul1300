@@ -1,46 +1,31 @@
 #include <iostream>
+#include <iomainip>
+
 using namspace std;
 
-void input( int& hours24, int& minutes);
-void output( int hours, int minutes);
+int main() {
+    char choice;
+    do {
+        int currH, currM, waitH, waitM;
+        char colon;
 
-int main()
-{
-    int timeHours, timeMinutes, waitHours, waitMinutes,finishHours, finishMinutes;
+        cout << "Current time (HH:MM): ";
+        cin >> currH >> colon >> currM;
+        cout << "Waiting time (HH:MM): ";
+        cin >> waitH >> colon >> waitM;
 
-  cout << "Compute completion time from current time and waiting period\n";
-  
+        int finalM = (currM + waitM) % 60;
+        int extraH = (currM + waitM) / 60;
+        int finalH = (currH + waitH + extraH) % 24;
 
-  char ans = 'y'; 
-  while ('y' == ans || 'Y' == ans)
-  {
-    cout << "Current time:\n";
-    input(timeHours, timeMinutes);
+        cout << "Completion Time: " 
+             << setfill('0') << setw(2) << finalH << ":" 
+             << setw(2) << finalM << endl;
 
-    cout << "Waiting time:\n";
-    input(waitHours, waitMinutes);
+        cout << "Enter Y to continue, any other halts: ";
+        cin >> choice;
+    } while (choice == 'Y' || choice == 'y');
 
-    
-    finishHours = timeHours + waitHours;
-    finishMinutes = timeMinutes + waitMinutes;
-
-    
-    finishHours += finishMinutes / 60;
-    if(finishHours >= 24)
-	{
-	  finishHours %= 24;
-	  cout << "Completion time is in the day following the start time\n";
-    }
-
-    finishMinutes%= 60;
-
-    cout << "Completion ";
-    output(finishHours, finishMinutes);
-
-	cout << "\n\nEnter Y or y to continue, any other halts\n\n";
-	cin >> ans;
-  }
-
-  return 0;
+    return 0;
 }
 
